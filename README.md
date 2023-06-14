@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://s3.us-west-2.amazonaws.com/gh-assets.chatwoot.com/brand.svg" alt="Woot-logo" width="240" />
 
-  <p align="center">Manual de instalação para Comunidade Automatik.</p>
+  <p align="center">Manual de instalação Chatwoot.</p>
 </p>
 
 # Documentação centralizada para Comunidade Automatik

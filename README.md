@@ -6,11 +6,7 @@
 
 # Seja Bem-Vindo a Comunidade Automatik
 
-<p align="left">
-	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
-	<span>Grupo Whatsapp: </span>
-	<a href="https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT" target="_blank">Grupo</a>
-</p>
+[Grupo no Whatsapp](https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT)
 <hr />
 
 ## Documentação Original

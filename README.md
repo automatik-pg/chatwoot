@@ -4,9 +4,12 @@
   <p align="center">Manual de instalação para Comunidade Automatik.</p>
 </p>
 
-# Seja Bem-Vindo a Comunidade Automatik
+# Documentação centralizada de Chatwoot Brasil para Comunidade Automatik
 
 [Grupo no Whatsapp](https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT)
+<hr />
+
+[Grupo no Telegram](https://t.me/chatwootbrasil)
 <hr />
 
 ## Documentação Original

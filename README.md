@@ -1,122 +1,213 @@
 <p align="center">
   <img src="https://s3.us-west-2.amazonaws.com/gh-assets.chatwoot.com/brand.svg" alt="Woot-logo" width="240" />
 
-  <p align="center">Customer engagement suite, an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc.</p>
+  <p align="center">Manual de instalação para Comunidade Automatik.</p>
 </p>
 
-<p align="center">
-  <a href="https://heroku.com/deploy?template=https://github.com/chatwoot/chatwoot/tree/master" alt="Deploy to Heroku">
-     <img width="150" alt="Deploy" src="https://www.herokucdn.com/deploy/button.svg"/>
-  </a>
-  <a href="https://marketplace.digitalocean.com/apps/chatwoot?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
-     <img width="200" alt="Deploy to DO" src="https://www.deploytodo.com/do-btn-blue.svg"/>
-  </a>
+# Seja Bem-Vindo a Comunidade Automatik
+
+<p align="left">
+	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
+	<span>Grupo Whatsapp: </span>
+	<a href="https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT" target="_blank">Grupo</a>
 </p>
+<hr />
 
-___
+## Documentação Original
 
-<p align="center">
-  <a href="https://codeclimate.com/github/chatwoot/chatwoot/maintainability"><img src="https://api.codeclimate.com/v1/badges/e6e3f66332c91e5a4c0c/maintainability" alt="Maintainability"></a>
-  <img src="https://img.shields.io/circleci/build/github/chatwoot/chatwoot" alt="CircleCI Badge">
-    <a href="https://hub.docker.com/r/chatwoot/chatwoot/"><img src="https://img.shields.io/docker/pulls/chatwoot/chatwoot" alt="Docker Pull Badge"></a>
-  <a href="https://hub.docker.com/r/chatwoot/chatwoot/"><img src="https://img.shields.io/docker/cloud/build/chatwoot/chatwoot" alt="Docker Build Badge"></a>
-  <img src="https://img.shields.io/github/commit-activity/m/chatwoot/chatwoot" alt="Commits-per-month">
-  <a title="Crowdin" target="_self" href="https://chatwoot.crowdin.com/chatwoot"><img src="https://badges.crowdin.net/e/37ced7eba411064bd792feb3b7a28b16/localized.svg"></a>
-  <a href="https://discord.gg/cJXdrwS"><img src="https://img.shields.io/discord/647412545203994635" alt="Discord"></a>
-  <a href="https://huntr.dev/bounties/disclose"><img src="https://cdn.huntr.dev/huntr_security_badge_mono.svg" alt="Huntr"></a>
-  <a href="https://status.chatwoot.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fuptime.json" alt="uptime"></a>
-  <a href="https://status.chatwoot.com"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fresponse-time.json" alt="response time"></a>
-  <a href="https://artifacthub.io/packages/helm/chatwoot/chatwoot"><img src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub" alt="Artifact HUB"></a>
-</p>
+Está disponível [chatwoot.com/help-center](https://www.chatwoot.com/help-center).
 
-<img src="https://chatwoot-public-assets.s3.amazonaws.com/github/screenshot.png" width="100%" alt="Chat dashboard"/>
+<details>
+  <summary>Atualização Manual (direta)</summary>
+  
+  Acesse o terminal e execute os seguinte comandos:
+  
+  ```bash
+    cwctl --upgrade# Login as Chatwoot user
+    sudo -i -u chatwoot
 
+    # Navigate to the Chatwoot directory
+    cd chatwoot
 
+    # Pull the latest version of the master branch
+    git checkout master && git pull
+    
+    # Ensure the ruby version is upto date
+    rvm install "ruby-3.1.3"
+    rvm use 3.1. --default
 
-Chatwoot is an open-source, self-hosted customer engagement suite. Chatwoot lets you view and manage your customer data, communicate with them irrespective of which medium they use, and re-engage them based on their profile.
+    # Update dependencies
+    bundle
+    yarn
 
-## Features
+    # Recompile the assets
+    rake assets:precompile RAILS_ENV=production
 
-Chatwoot supports the following conversation channels:
+    # Migrate the database schema
+    RAILS_ENV=production bundle exec rake db:migrate
 
- - **Website**: Talk to your customers using our live chat widget and make use of our SDK to identify a user and provide contextual support.
- - **Facebook**: Connect your Facebook pages and start replying to the direct messages to your page.
- - **Instagram**: Connect your Instagram profile and start replying to the direct messages.
- - **Twitter**: Connect your Twitter profiles and reply to direct messages or the tweets where you are mentioned.
- - **Telegram**: Connect your Telegram bot and reply to your customers right from a single dashboard.
- - **WhatsApp**: Connect your WhatsApp business account and manage the conversation in Chatwoot.
- - **Line**: Connect your Line account and manage the conversations in Chatwoot.
- - **SMS**: Connect your Twilio SMS account and reply to the SMS queries in Chatwoot.
- - **API Channel**: Build custom communication channels using our API channel.
- - **Email**: Forward all your email queries to Chatwoot and view it in our integrated dashboard.
+    # Switch back to root user
+    exit
 
-And more.
+    # Reload systemd files
+    systemctl daemon-reload
 
-Other features include:
+    # Restart the chatwoot server
+    systemctl restart chatwoot.target
+  ``` 
 
-- **CRM**: Save all your customer information right inside Chatwoot, use contact notes to log emails, phone calls, or meeting notes.
-- **Custom Attributes**: Define custom attribute attributes to store information about a contact or a conversation and extend the product to match your workflow.
-- **Shared multi-brand inboxes**: Manage multiple brands or pages using a shared inbox.
-- **Private notes**: Use @mentions and private notes to communicate internally about a conversation.
-- **Canned responses (Saved replies)**: Improve the response rate by adding saved replies for frequently asked questions.
-- **Conversation Labels**: Use conversation labels to create custom workflows.
-- **Auto assignment**: Chatwoot intelligently assigns a ticket to the agents who have access to the inbox depending on their availability and load.
-- **Conversation continuity**: If the user has provided an email address through the chat widget, Chatwoot will send an email to the customer under the agent name so that the user can continue the conversation over the email.
-- **Multi-lingual support**: Chatwoot supports 10+ languages.
-- **Powerful API & Webhooks**: Extend the capability of the software using Chatwoot’s webhooks and APIs.
-- **Integrations**: Chatwoot natively integrates with Slack right now. Manage your conversations in Slack without logging into the dashboard.
+  Só use este abaixo se souber mexer como o git
+  ```bash
+    cwctl --upgrade# Login as Chatwoot user
+    sudo -i -u chatwoot
 
-## Documentation
+    # Navigate to the Chatwoot directory
+    cd chatwoot
 
-Detailed documentation is available at [chatwoot.com/help-center](https://www.chatwoot.com/help-center).
+    # Pull the latest version of the master branch
+    git checkout develope && git pull
+    
+    # Ensure the ruby version is upto date
+    rvm install "ruby-3.1.3"
+    rvm use 3.1. --default
 
-## Translation process
+    # Update dependencies
+    bundle
+    yarn
 
-The translation process for Chatwoot web and mobile app is managed at [https://translate.chatwoot.com](https://translate.chatwoot.com) using Crowdin. Please read the [translation guide](https://www.chatwoot.com/docs/contributing/translating-chatwoot-to-your-language) for contributing to Chatwoot.
+    # Recompile the assets
+    rake assets:precompile RAILS_ENV=production
 
-## Branching model
+    # Migrate the database schema
+    RAILS_ENV=production bundle exec rake db:migrate
 
-We use the [git-flow](https://nvie.com/posts/a-successful-git-branching-model/) branching model. The base branch is `develop`.
-If you are looking for a stable version, please use the `master` or tags labelled as `v1.x.x`.
+    # Switch back to root user
+    exit
 
-## Deployment
+    # Reload systemd files
+    systemctl daemon-reload
 
-### Heroku one-click deploy
+    # Restart the chatwoot server
+    systemctl restart chatwoot.target
+  ``` 
+</details>
 
-Deploying Chatwoot to Heroku is a breeze. It's as simple as clicking this button:
+<details>
+  <summary>Instalação Manual (direta)</summary>
+  Obs: UBUNTU 22.04 RECOMENDADO!
+  
+  Acesse o terminal e execute os seguinte comandos:
+  
+  ```bash
+    sudo apt update && apt upgrade -y
+    wget https://get.chatwoot.app/linux/install.sh
+    chmod +x install.sh
+    ./install.sh --install
+    Use as opções abaixo
+    yes
+    chatwoot.dominio.com.br
+    contato@dominio.com.br
+    yes para todos
+  ```
+  
+  Use as opções abaixo:  <br>  
+  yes # Para Configurar Automaticamente Dominio! <br>  
+  chatwoot.dominio.com.br # seu dominio com o subdominio do chatwoot  <br>  
+  contato@dominio.com.br # seu email para gerar certificado SSL <br>  
+  yes para todos
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/chatwoot/chatwoot/tree/master)
+  #### Caso de algum erro ou demorar muito, teste refazendo a instalação   
+</details>
 
-Follow this [link](https://www.chatwoot.com/docs/environment-variables) to understand setting the correct environment variables for the app to work with all the features. There might be breakages if you do not set the relevant environment variables.
+<details>
+  <summary>Habilitando configurações ocultas do Chatwoot</summary>
+  
+  Execute os comandos abaixo para se conectar ao PostgreSQL e fazer a liberação das configurações
+  ```bash
+    sudo -u postgres psql
+    \c chatwoot_production
+  ```
+  ```bash
+    update installation_configs set locked = false;
+  ```
+</details>
 
+<details>
+  <summary>Alteração de Idioma e Ativação de Tela de Cadastro</summary>
+    
+  ```bash
+    cd /home/chatwoot/chatwoot
+    nano .env
+  ```
 
-### DigitalOcean 1-Click Kubernetes deployment
+    Altere a linha
+    DEFAULT_LOCALE=pt_BR
+    ENABLE_ACCOUNT_SIGNUP=true
 
-Chatwoot now supports 1-Click deployment to DigitalOcean as a kubernetes app.
+  ```bash
+    sudo systemctl restart chatwoot.target
+  ```
+  
+  Acesse: seudominio.com.br
+  
+  Faça seu cadastro  
+</details>
 
-<a href="https://marketplace.digitalocean.com/apps/chatwoot?refcode=f2238426a2a8" alt="Deploy to DigitalOcean">
-  <img width="200" alt="Deploy to DO" src="https://www.deploytodo.com/do-btn-blue.svg"/>
-</a>
+<details>
+  <summary>Remover o Chatwoot</summary>
+  
+  Execute os comandos abaixo:
+  ```bash
+    rm -rf /home/chatwoot
+    rm -rf /etc/nginx/sites-available/nginx_chatwoot.conf
+    rm -rf /etc/nginx/sites-enabled/nginx_chatwoot.conf
 
-### Other deployment options
+    nginx -t
 
-For other supported options, checkout our [deployment page](https://chatwoot.com/deploy). 
+    kill -9 $(lsof -i tcp:3000 -t)
+  ```
+  
+  Remover o Ruby Sidekiq
+  ```bash
+    sudo apt-get remove --auto-remove ruby-sidekiq
+    sudo apt-get purge ruby-sidekiq
+  ```
+  
+  Remover o Ruby
+  ```bash
+    aptitude purge ruby
+  ```
+  
+  Remover o usuário Chatwoot
+  ```bash
+    userdel -r chatwoot
+  ```
+  
+  Reiniciar o nginx
+  ```bash
+    service nginx restart
+  ```
+</details>
 
-## Security
+<details>
+  <summary>Dados do SuperAdmin | Extras</summary>
+  
+  Acesse super Admin: https://seudominio.com.br/super_admin
 
-Looking to report a vulnerability? Please refer our [SECURITY.md](./SECURITY.md) file.
+  Vá em Opção > installation_configs
 
+  ```bash
+    LOGO
+    LOGO_THUMBNAIL
+    NOMES CHATWOOT
+    Alterando nomes na plataforma
+    INSTALLATION_NAME
+    BRAND_NAME
+    TERMOS E POLITICA DE PRIVACIDADE
+    TERMS_URL
+    PRIVACY_URL
+    BRAND_URL
+    WIDGET_BRAND_URL
+  ```
 
-## Community? Questions? Support ?
-
-If you need help or just want to hang out, come, say hi on our [Discord](https://discord.gg/cJXdrwS) server.
-
-
-## Contributors ✨
-
-Thanks goes to all these [wonderful people](https://www.chatwoot.com/docs/contributors):
-
-<a href="https://github.com/chatwoot/chatwoot/graphs/contributors"><img src="https://opencollective.com/chatwoot/contributors.svg?width=890&button=false" /></a>
-
-
-*Chatwoot* &copy; 2017-2023, Chatwoot Inc - Released under the MIT License.
+</details>

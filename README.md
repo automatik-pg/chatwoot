@@ -4,7 +4,7 @@
   <p align="center">Manual de instalação Chatwoot.</p>
 </p>
 
-# Documentação centralizada para Comunidade Automatik
+# CHATWOOT BRASIL
 
 [Grupo no Whatsapp](https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT)
 <hr />

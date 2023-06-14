@@ -99,11 +99,6 @@ Está disponível [chatwoot.com/help-center](https://www.chatwoot.com/help-cente
     wget https://get.chatwoot.app/linux/install.sh
     chmod +x install.sh
     ./install.sh --install
-    Use as opções abaixo
-    yes
-    chatwoot.dominio.com.br
-    contato@dominio.com.br
-    yes para todos
   ```
   
   Use as opções abaixo:  <br>  

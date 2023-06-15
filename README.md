@@ -92,6 +92,29 @@ Está disponível [chatwoot.com/help-center](https://www.chatwoot.com/help-cente
 </details>
 
 <details>
+  <summary>Como fazer downgrade versão do seu chatwoot | Extras</summary>
+ 
+  ```bash
+  sudo -i -u chatwoot
+  cd chatwoot
+  # Pegeue o commit da versão desejada para o downgrade
+  git checkout 7bd4007
+  rvm reinstall ruby-3.1.3
+  rvm use 3.1.3 --default
+  bundle
+  yarn
+  rake assets:precompile RAILS_ENV=production
+  exit
+  ```
+  
+  ```bash
+  systemctl daemon-reload
+  systemctl restart chatwoot.target
+  ```
+
+</details>
+
+<details>
   <summary>Instalação Manual (direta)</summary>
   Obs: UBUNTU 22.04 RECOMENDADO!
   

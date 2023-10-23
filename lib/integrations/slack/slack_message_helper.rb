@@ -1,8 +1,4 @@
-module SlackMessageCreation
-  extend ActiveSupport::Concern
-
-  private
-
+module Integrations::Slack::SlackMessageHelper
   def create_message
     return unless conversation
 
@@ -65,5 +61,18 @@ module SlackMessageCreation
     when 'pdf'
       :file
     end
+  end
+
+  def conversation
+    @conversation ||= Conversation.where(identifier: params[:event][:thread_ts]).first
+  end
+
+  def sender
+    user_email = slack_client.users_info(user: params[:event][:user])[:user][:profile][:email]
+    conversation.account.users.find_by(email: user_email)
+  end
+
+  def private_note?
+    params[:event][:text].strip.downcase.starts_with?('note:', 'private:')
   end
 end

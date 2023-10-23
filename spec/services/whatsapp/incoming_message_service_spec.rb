@@ -59,6 +59,17 @@ describe Whatsapp::IncomingMessageService do
         expect(contact_inbox.conversations.last.messages.last.content).to eq(params[:messages].first[:text][:body])
       end
 
+      it 'will not create a new conversation if last conversation is not resolved and lock to single conversation is disabled' do
+        whatsapp_channel.inbox.update(lock_to_single_conversation: false)
+        contact_inbox = create(:contact_inbox, inbox: whatsapp_channel.inbox, source_id: params[:messages].first[:from])
+        last_conversation = create(:conversation, inbox: whatsapp_channel.inbox, contact_inbox: contact_inbox)
+        last_conversation.update(status: Conversation.statuses.except('resolved').keys.sample)
+        described_class.new(inbox: whatsapp_channel.inbox, params: params).perform
+        # new conversation should be created
+        expect(whatsapp_channel.inbox.conversations.count).to eq(1)
+        expect(contact_inbox.conversations.last.messages.last.content).to eq(params[:messages].first[:text][:body])
+      end
+
       it 'will not create duplicate messages when same message is received' do
         described_class.new(inbox: whatsapp_channel.inbox, params: params).perform
         expect(whatsapp_channel.inbox.messages.count).to eq(1)

@@ -24,6 +24,31 @@ describe Twilio::IncomingMessageService do
       expect(conversation.reload.messages.last.content).to eq('testing3')
     end
 
+    it 'removes null bytes' do
+      params = {
+        SmsSid: 'SMxx',
+        From: '+12345',
+        AccountSid: 'ACxxx',
+        MessagingServiceSid: twilio_channel.messaging_service_sid,
+        Body: "remove\u0000 null bytes\u0000"
+      }
+
+      described_class.new(params: params).perform
+      expect(conversation.reload.messages.last.content).to eq('remove null bytes')
+    end
+
+    it 'wont throw error when the body is empty' do
+      params = {
+        SmsSid: 'SMxx',
+        From: '+12345',
+        AccountSid: 'ACxxx',
+        MessagingServiceSid: twilio_channel.messaging_service_sid
+      }
+
+      described_class.new(params: params).perform
+      expect(conversation.reload.messages.last.content).to be_nil
+    end
+
     it 'creates a new conversation when payload is from different number' do
       params = {
         SmsSid: 'SMxx',
@@ -100,6 +125,22 @@ describe Twilio::IncomingMessageService do
         conversation.update(status: 'resolved')
         described_class.new(params: params).perform
         expect(twilio_channel.inbox.conversations.count).to eq(2)
+        expect(twilio_channel.inbox.conversations.last.messages.last.content).to eq('testing3')
+      end
+
+      it 'will not create a new conversation if last conversation is not resolved and lock to single conversation is disabled' do
+        params = {
+          SmsSid: 'SMxx',
+          From: '+12345',
+          AccountSid: 'ACxxx',
+          To: twilio_channel.phone_number,
+          Body: 'testing3'
+        }
+
+        twilio_channel.inbox.update(lock_to_single_conversation: false)
+        conversation.update(status: Conversation.statuses.except('resolved').keys.sample)
+        described_class.new(params: params).perform
+        expect(twilio_channel.inbox.conversations.count).to eq(1)
         expect(twilio_channel.inbox.conversations.last.messages.last.content).to eq('testing3')
       end
     end
